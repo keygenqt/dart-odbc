@@ -26,6 +26,16 @@ void main() {
 }
 ```
 
+#### Output
+
+```shell
+101, Hello, ClickHouse!
+101, Granules are the smallest chunks of data read
+102, Insert a lot of rows per batch
+102, Sort your data based on your commonly-used queries
+
+```
+
 ### License
 
 ```
