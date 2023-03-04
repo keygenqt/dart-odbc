@@ -4,11 +4,18 @@ import 'configuration.dart';
 
 void main() {
 
-  var awesome = Awesome(
+  var odbc = DartOdbc();
+
+  if (odbc.connect(
     driver: Configuration.driver,
     username: Configuration.username,
     password: Configuration.password,
-  );
-
-  print(awesome.select());
+  )) {
+    // select
+    print(odbc.query("SELECT * FROM helloworld.my_first_table"));
+    // disconnect
+    odbc.disconnect();
+  } else {
+    print("Error connect");
+  }
 }

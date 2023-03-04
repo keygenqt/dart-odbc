@@ -2,12 +2,12 @@ CMAKE_MINIMUM_REQUIRED (VERSION 3.22.1)
 project(dart_odbc VERSION 0.0.1)
 
 ## Libs
-add_library(dart_odbc SHARED hello.c)
+add_library(dart_odbc SHARED dart_odbc.c)
 target_link_libraries(dart_odbc -lodbc)
 target_link_libraries(dart_odbc -lltdl)
 
 set_target_properties(dart_odbc PROPERTIES
-    PUBLIC_HEADER hello.h
+    PUBLIC_HEADER dart_odbc.h
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
     OUTPUT_NAME "dart_odbc"
@@ -15,6 +15,6 @@ set_target_properties(dart_odbc PROPERTIES
 )
 
 ## App
-add_executable(main "main.c")
-target_link_libraries(main -l:libodbc.a)
-target_link_libraries(main -l:libltdl.a)
+# add_executable(main "main.c")
+# target_link_libraries(main -l:libodbc.a)
+# target_link_libraries(main -l:libltdl.a)

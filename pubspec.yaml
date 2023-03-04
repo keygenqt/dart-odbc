@@ -21,4 +21,4 @@ ffigen:
   output: 'lib/src/generated_odbc.dart'
   headers:
     entry-points:
-      - 'c_lib/hello.h'
+      - 'c_lib/dart_odbc.h'

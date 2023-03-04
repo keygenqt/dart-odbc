@@ -18,22 +18,2275 @@ class NativeLibrary {
           lookup)
       : _lookup = lookup;
 
-  ffi.Pointer<ffi.Char> select() {
-    return _select();
+  int SQLAllocConnect(
+    SQLHENV EnvironmentHandle,
+    ffi.Pointer<SQLHDBC> ConnectionHandle,
+  ) {
+    return _SQLAllocConnect(
+      EnvironmentHandle,
+      ConnectionHandle,
+    );
   }
 
-  late final _selectPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>('select');
-  late final _select =
-      _selectPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
+  late final _SQLAllocConnectPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHENV, ffi.Pointer<SQLHDBC>)>>('SQLAllocConnect');
+  late final _SQLAllocConnect = _SQLAllocConnectPtr.asFunction<
+      int Function(SQLHENV, ffi.Pointer<SQLHDBC>)>();
 
-  ffi.Pointer<ffi.Char> hello_world() {
-    return _hello_world();
+  int SQLAllocEnv(
+    ffi.Pointer<SQLHENV> EnvironmentHandle,
+  ) {
+    return _SQLAllocEnv(
+      EnvironmentHandle,
+    );
   }
 
-  late final _hello_worldPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>(
-          'hello_world');
-  late final _hello_world =
-      _hello_worldPtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
+  late final _SQLAllocEnvPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(ffi.Pointer<SQLHENV>)>>(
+          'SQLAllocEnv');
+  late final _SQLAllocEnv =
+      _SQLAllocEnvPtr.asFunction<int Function(ffi.Pointer<SQLHENV>)>();
+
+  int SQLAllocHandle(
+    int HandleType,
+    SQLHANDLE InputHandle,
+    ffi.Pointer<SQLHANDLE> OutputHandle,
+  ) {
+    return _SQLAllocHandle(
+      HandleType,
+      InputHandle,
+      OutputHandle,
+    );
+  }
+
+  late final _SQLAllocHandlePtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLSMALLINT, SQLHANDLE,
+              ffi.Pointer<SQLHANDLE>)>>('SQLAllocHandle');
+  late final _SQLAllocHandle = _SQLAllocHandlePtr.asFunction<
+      int Function(int, SQLHANDLE, ffi.Pointer<SQLHANDLE>)>();
+
+  int SQLAllocStmt(
+    SQLHDBC ConnectionHandle,
+    ffi.Pointer<SQLHSTMT> StatementHandle,
+  ) {
+    return _SQLAllocStmt(
+      ConnectionHandle,
+      StatementHandle,
+    );
+  }
+
+  late final _SQLAllocStmtPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDBC, ffi.Pointer<SQLHSTMT>)>>('SQLAllocStmt');
+  late final _SQLAllocStmt = _SQLAllocStmtPtr.asFunction<
+      int Function(SQLHDBC, ffi.Pointer<SQLHSTMT>)>();
+
+  int SQLBindCol(
+    SQLHSTMT StatementHandle,
+    int ColumnNumber,
+    int TargetType,
+    SQLPOINTER TargetValue,
+    int BufferLength,
+    ffi.Pointer<SQLLEN> StrLen_or_Ind,
+  ) {
+    return _SQLBindCol(
+      StatementHandle,
+      ColumnNumber,
+      TargetType,
+      TargetValue,
+      BufferLength,
+      StrLen_or_Ind,
+    );
+  }
+
+  late final _SQLBindColPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, SQLUSMALLINT, SQLSMALLINT, SQLPOINTER,
+              SQLLEN, ffi.Pointer<SQLLEN>)>>('SQLBindCol');
+  late final _SQLBindCol = _SQLBindColPtr.asFunction<
+      int Function(SQLHSTMT, int, int, SQLPOINTER, int, ffi.Pointer<SQLLEN>)>();
+
+  int SQLBindParam(
+    SQLHSTMT StatementHandle,
+    int ParameterNumber,
+    int ValueType,
+    int ParameterType,
+    int LengthPrecision,
+    int ParameterScale,
+    SQLPOINTER ParameterValue,
+    ffi.Pointer<SQLLEN> StrLen_or_Ind,
+  ) {
+    return _SQLBindParam(
+      StatementHandle,
+      ParameterNumber,
+      ValueType,
+      ParameterType,
+      LengthPrecision,
+      ParameterScale,
+      ParameterValue,
+      StrLen_or_Ind,
+    );
+  }
+
+  late final _SQLBindParamPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              SQLUSMALLINT,
+              SQLSMALLINT,
+              SQLSMALLINT,
+              SQLULEN,
+              SQLSMALLINT,
+              SQLPOINTER,
+              ffi.Pointer<SQLLEN>)>>('SQLBindParam');
+  late final _SQLBindParam = _SQLBindParamPtr.asFunction<
+      int Function(SQLHSTMT, int, int, int, int, int, SQLPOINTER,
+          ffi.Pointer<SQLLEN>)>();
+
+  int SQLCancel(
+    SQLHSTMT StatementHandle,
+  ) {
+    return _SQLCancel(
+      StatementHandle,
+    );
+  }
+
+  late final _SQLCancelPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHSTMT)>>('SQLCancel');
+  late final _SQLCancel = _SQLCancelPtr.asFunction<int Function(SQLHSTMT)>();
+
+  int SQLCancelHandle(
+    int HandleType,
+    SQLHANDLE InputHandle,
+  ) {
+    return _SQLCancelHandle(
+      HandleType,
+      InputHandle,
+    );
+  }
+
+  late final _SQLCancelHandlePtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLSMALLINT, SQLHANDLE)>>(
+          'SQLCancelHandle');
+  late final _SQLCancelHandle =
+      _SQLCancelHandlePtr.asFunction<int Function(int, SQLHANDLE)>();
+
+  int SQLCloseCursor(
+    SQLHSTMT StatementHandle,
+  ) {
+    return _SQLCloseCursor(
+      StatementHandle,
+    );
+  }
+
+  late final _SQLCloseCursorPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHSTMT)>>(
+          'SQLCloseCursor');
+  late final _SQLCloseCursor =
+      _SQLCloseCursorPtr.asFunction<int Function(SQLHSTMT)>();
+
+  int SQLColAttribute(
+    SQLHSTMT StatementHandle,
+    int ColumnNumber,
+    int FieldIdentifier,
+    SQLPOINTER CharacterAttribute,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> StringLength,
+    ffi.Pointer<SQLLEN> NumericAttribute,
+  ) {
+    return _SQLColAttribute(
+      StatementHandle,
+      ColumnNumber,
+      FieldIdentifier,
+      CharacterAttribute,
+      BufferLength,
+      StringLength,
+      NumericAttribute,
+    );
+  }
+
+  late final _SQLColAttributePtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              SQLUSMALLINT,
+              SQLUSMALLINT,
+              SQLPOINTER,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLLEN>)>>('SQLColAttribute');
+  late final _SQLColAttribute = _SQLColAttributePtr.asFunction<
+      int Function(SQLHSTMT, int, int, SQLPOINTER, int,
+          ffi.Pointer<SQLSMALLINT>, ffi.Pointer<SQLLEN>)>();
+
+  int SQLColumns(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> CatalogName,
+    int NameLength1,
+    ffi.Pointer<SQLCHAR> SchemaName,
+    int NameLength2,
+    ffi.Pointer<SQLCHAR> TableName,
+    int NameLength3,
+    ffi.Pointer<SQLCHAR> ColumnName,
+    int NameLength4,
+  ) {
+    return _SQLColumns(
+      StatementHandle,
+      CatalogName,
+      NameLength1,
+      SchemaName,
+      NameLength2,
+      TableName,
+      NameLength3,
+      ColumnName,
+      NameLength4,
+    );
+  }
+
+  late final _SQLColumnsPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT)>>('SQLColumns');
+  late final _SQLColumns = _SQLColumnsPtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>,
+          int, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>, int)>();
+
+  int SQLConnect(
+    SQLHDBC ConnectionHandle,
+    ffi.Pointer<SQLCHAR> ServerName,
+    int NameLength1,
+    ffi.Pointer<SQLCHAR> UserName,
+    int NameLength2,
+    ffi.Pointer<SQLCHAR> Authentication,
+    int NameLength3,
+  ) {
+    return _SQLConnect(
+      ConnectionHandle,
+      ServerName,
+      NameLength1,
+      UserName,
+      NameLength2,
+      Authentication,
+      NameLength3,
+    );
+  }
+
+  late final _SQLConnectPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHDBC,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT)>>('SQLConnect');
+  late final _SQLConnect = _SQLConnectPtr.asFunction<
+      int Function(SQLHDBC, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>,
+          int, ffi.Pointer<SQLCHAR>, int)>();
+
+  int SQLCopyDesc(
+    SQLHDESC SourceDescHandle,
+    SQLHDESC TargetDescHandle,
+  ) {
+    return _SQLCopyDesc(
+      SourceDescHandle,
+      TargetDescHandle,
+    );
+  }
+
+  late final _SQLCopyDescPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHDESC, SQLHDESC)>>(
+          'SQLCopyDesc');
+  late final _SQLCopyDesc =
+      _SQLCopyDescPtr.asFunction<int Function(SQLHDESC, SQLHDESC)>();
+
+  int SQLDataSources(
+    SQLHENV EnvironmentHandle,
+    int Direction,
+    ffi.Pointer<SQLCHAR> ServerName,
+    int BufferLength1,
+    ffi.Pointer<SQLSMALLINT> NameLength1,
+    ffi.Pointer<SQLCHAR> Description,
+    int BufferLength2,
+    ffi.Pointer<SQLSMALLINT> NameLength2,
+  ) {
+    return _SQLDataSources(
+      EnvironmentHandle,
+      Direction,
+      ServerName,
+      BufferLength1,
+      NameLength1,
+      Description,
+      BufferLength2,
+      NameLength2,
+    );
+  }
+
+  late final _SQLDataSourcesPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHENV,
+              SQLUSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLDataSources');
+  late final _SQLDataSources = _SQLDataSourcesPtr.asFunction<
+      int Function(
+          SQLHENV,
+          int,
+          ffi.Pointer<SQLCHAR>,
+          int,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLCHAR>,
+          int,
+          ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLDescribeCol(
+    SQLHSTMT StatementHandle,
+    int ColumnNumber,
+    ffi.Pointer<SQLCHAR> ColumnName,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> NameLength,
+    ffi.Pointer<SQLSMALLINT> DataType,
+    ffi.Pointer<SQLULEN> ColumnSize,
+    ffi.Pointer<SQLSMALLINT> DecimalDigits,
+    ffi.Pointer<SQLSMALLINT> Nullable,
+  ) {
+    return _SQLDescribeCol(
+      StatementHandle,
+      ColumnNumber,
+      ColumnName,
+      BufferLength,
+      NameLength,
+      DataType,
+      ColumnSize,
+      DecimalDigits,
+      Nullable,
+    );
+  }
+
+  late final _SQLDescribeColPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              SQLUSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLULEN>,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLDescribeCol');
+  late final _SQLDescribeCol = _SQLDescribeColPtr.asFunction<
+      int Function(
+          SQLHSTMT,
+          int,
+          ffi.Pointer<SQLCHAR>,
+          int,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLULEN>,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLDisconnect(
+    SQLHDBC ConnectionHandle,
+  ) {
+    return _SQLDisconnect(
+      ConnectionHandle,
+    );
+  }
+
+  late final _SQLDisconnectPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHDBC)>>('SQLDisconnect');
+  late final _SQLDisconnect =
+      _SQLDisconnectPtr.asFunction<int Function(SQLHDBC)>();
+
+  int SQLEndTran(
+    int HandleType,
+    SQLHANDLE Handle,
+    int CompletionType,
+  ) {
+    return _SQLEndTran(
+      HandleType,
+      Handle,
+      CompletionType,
+    );
+  }
+
+  late final _SQLEndTranPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLSMALLINT, SQLHANDLE, SQLSMALLINT)>>('SQLEndTran');
+  late final _SQLEndTran =
+      _SQLEndTranPtr.asFunction<int Function(int, SQLHANDLE, int)>();
+
+  int SQLError(
+    SQLHENV EnvironmentHandle,
+    SQLHDBC ConnectionHandle,
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> Sqlstate,
+    ffi.Pointer<SQLINTEGER> NativeError,
+    ffi.Pointer<SQLCHAR> MessageText,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> TextLength,
+  ) {
+    return _SQLError(
+      EnvironmentHandle,
+      ConnectionHandle,
+      StatementHandle,
+      Sqlstate,
+      NativeError,
+      MessageText,
+      BufferLength,
+      TextLength,
+    );
+  }
+
+  late final _SQLErrorPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHENV,
+              SQLHDBC,
+              SQLHSTMT,
+              ffi.Pointer<SQLCHAR>,
+              ffi.Pointer<SQLINTEGER>,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLError');
+  late final _SQLError = _SQLErrorPtr.asFunction<
+      int Function(
+          SQLHENV,
+          SQLHDBC,
+          SQLHSTMT,
+          ffi.Pointer<SQLCHAR>,
+          ffi.Pointer<SQLINTEGER>,
+          ffi.Pointer<SQLCHAR>,
+          int,
+          ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLExecDirect(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> StatementText,
+    int TextLength,
+  ) {
+    return _SQLExecDirect(
+      StatementHandle,
+      StatementText,
+      TextLength,
+    );
+  }
+
+  late final _SQLExecDirectPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, ffi.Pointer<SQLCHAR>, SQLINTEGER)>>('SQLExecDirect');
+  late final _SQLExecDirect = _SQLExecDirectPtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, int)>();
+
+  int SQLExecute(
+    SQLHSTMT StatementHandle,
+  ) {
+    return _SQLExecute(
+      StatementHandle,
+    );
+  }
+
+  late final _SQLExecutePtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHSTMT)>>('SQLExecute');
+  late final _SQLExecute = _SQLExecutePtr.asFunction<int Function(SQLHSTMT)>();
+
+  int SQLFetch(
+    SQLHSTMT StatementHandle,
+  ) {
+    return _SQLFetch(
+      StatementHandle,
+    );
+  }
+
+  late final _SQLFetchPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHSTMT)>>('SQLFetch');
+  late final _SQLFetch = _SQLFetchPtr.asFunction<int Function(SQLHSTMT)>();
+
+  int SQLFetchScroll(
+    SQLHSTMT StatementHandle,
+    int FetchOrientation,
+    int FetchOffset,
+  ) {
+    return _SQLFetchScroll(
+      StatementHandle,
+      FetchOrientation,
+      FetchOffset,
+    );
+  }
+
+  late final _SQLFetchScrollPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, SQLSMALLINT, SQLLEN)>>('SQLFetchScroll');
+  late final _SQLFetchScroll =
+      _SQLFetchScrollPtr.asFunction<int Function(SQLHSTMT, int, int)>();
+
+  int SQLFreeConnect(
+    SQLHDBC ConnectionHandle,
+  ) {
+    return _SQLFreeConnect(
+      ConnectionHandle,
+    );
+  }
+
+  late final _SQLFreeConnectPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHDBC)>>(
+          'SQLFreeConnect');
+  late final _SQLFreeConnect =
+      _SQLFreeConnectPtr.asFunction<int Function(SQLHDBC)>();
+
+  int SQLFreeEnv(
+    SQLHENV EnvironmentHandle,
+  ) {
+    return _SQLFreeEnv(
+      EnvironmentHandle,
+    );
+  }
+
+  late final _SQLFreeEnvPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHENV)>>('SQLFreeEnv');
+  late final _SQLFreeEnv = _SQLFreeEnvPtr.asFunction<int Function(SQLHENV)>();
+
+  int SQLFreeHandle(
+    int HandleType,
+    SQLHANDLE Handle,
+  ) {
+    return _SQLFreeHandle(
+      HandleType,
+      Handle,
+    );
+  }
+
+  late final _SQLFreeHandlePtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLSMALLINT, SQLHANDLE)>>(
+          'SQLFreeHandle');
+  late final _SQLFreeHandle =
+      _SQLFreeHandlePtr.asFunction<int Function(int, SQLHANDLE)>();
+
+  int SQLFreeStmt(
+    SQLHSTMT StatementHandle,
+    int Option,
+  ) {
+    return _SQLFreeStmt(
+      StatementHandle,
+      Option,
+    );
+  }
+
+  late final _SQLFreeStmtPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHSTMT, SQLUSMALLINT)>>(
+          'SQLFreeStmt');
+  late final _SQLFreeStmt =
+      _SQLFreeStmtPtr.asFunction<int Function(SQLHSTMT, int)>();
+
+  int SQLGetConnectAttr(
+    SQLHDBC ConnectionHandle,
+    int Attribute,
+    SQLPOINTER Value,
+    int BufferLength,
+    ffi.Pointer<SQLINTEGER> StringLength,
+  ) {
+    return _SQLGetConnectAttr(
+      ConnectionHandle,
+      Attribute,
+      Value,
+      BufferLength,
+      StringLength,
+    );
+  }
+
+  late final _SQLGetConnectAttrPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDBC, SQLINTEGER, SQLPOINTER, SQLINTEGER,
+              ffi.Pointer<SQLINTEGER>)>>('SQLGetConnectAttr');
+  late final _SQLGetConnectAttr = _SQLGetConnectAttrPtr.asFunction<
+      int Function(SQLHDBC, int, SQLPOINTER, int, ffi.Pointer<SQLINTEGER>)>();
+
+  int SQLGetConnectOption(
+    SQLHDBC ConnectionHandle,
+    int Option,
+    SQLPOINTER Value,
+  ) {
+    return _SQLGetConnectOption(
+      ConnectionHandle,
+      Option,
+      Value,
+    );
+  }
+
+  late final _SQLGetConnectOptionPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHDBC, SQLUSMALLINT, SQLPOINTER)>>('SQLGetConnectOption');
+  late final _SQLGetConnectOption = _SQLGetConnectOptionPtr.asFunction<
+      int Function(SQLHDBC, int, SQLPOINTER)>();
+
+  int SQLGetCursorName(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> CursorName,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> NameLength,
+  ) {
+    return _SQLGetCursorName(
+      StatementHandle,
+      CursorName,
+      BufferLength,
+      NameLength,
+    );
+  }
+
+  late final _SQLGetCursorNamePtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLGetCursorName');
+  late final _SQLGetCursorName = _SQLGetCursorNamePtr.asFunction<
+      int Function(
+          SQLHSTMT, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLGetData(
+    SQLHSTMT StatementHandle,
+    int ColumnNumber,
+    int TargetType,
+    SQLPOINTER TargetValue,
+    int BufferLength,
+    ffi.Pointer<SQLLEN> StrLen_or_Ind,
+  ) {
+    return _SQLGetData(
+      StatementHandle,
+      ColumnNumber,
+      TargetType,
+      TargetValue,
+      BufferLength,
+      StrLen_or_Ind,
+    );
+  }
+
+  late final _SQLGetDataPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, SQLUSMALLINT, SQLSMALLINT, SQLPOINTER,
+              SQLLEN, ffi.Pointer<SQLLEN>)>>('SQLGetData');
+  late final _SQLGetData = _SQLGetDataPtr.asFunction<
+      int Function(SQLHSTMT, int, int, SQLPOINTER, int, ffi.Pointer<SQLLEN>)>();
+
+  int SQLGetDescField(
+    SQLHDESC DescriptorHandle,
+    int RecNumber,
+    int FieldIdentifier,
+    SQLPOINTER Value,
+    int BufferLength,
+    ffi.Pointer<SQLINTEGER> StringLength,
+  ) {
+    return _SQLGetDescField(
+      DescriptorHandle,
+      RecNumber,
+      FieldIdentifier,
+      Value,
+      BufferLength,
+      StringLength,
+    );
+  }
+
+  late final _SQLGetDescFieldPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDESC, SQLSMALLINT, SQLSMALLINT, SQLPOINTER,
+              SQLINTEGER, ffi.Pointer<SQLINTEGER>)>>('SQLGetDescField');
+  late final _SQLGetDescField = _SQLGetDescFieldPtr.asFunction<
+      int Function(
+          SQLHDESC, int, int, SQLPOINTER, int, ffi.Pointer<SQLINTEGER>)>();
+
+  int SQLGetDescRec(
+    SQLHDESC DescriptorHandle,
+    int RecNumber,
+    ffi.Pointer<SQLCHAR> Name,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> StringLength,
+    ffi.Pointer<SQLSMALLINT> Type,
+    ffi.Pointer<SQLSMALLINT> SubType,
+    ffi.Pointer<SQLLEN> Length,
+    ffi.Pointer<SQLSMALLINT> Precision,
+    ffi.Pointer<SQLSMALLINT> Scale,
+    ffi.Pointer<SQLSMALLINT> Nullable,
+  ) {
+    return _SQLGetDescRec(
+      DescriptorHandle,
+      RecNumber,
+      Name,
+      BufferLength,
+      StringLength,
+      Type,
+      SubType,
+      Length,
+      Precision,
+      Scale,
+      Nullable,
+    );
+  }
+
+  late final _SQLGetDescRecPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHDESC,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLLEN>,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLSMALLINT>,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLGetDescRec');
+  late final _SQLGetDescRec = _SQLGetDescRecPtr.asFunction<
+      int Function(
+          SQLHDESC,
+          int,
+          ffi.Pointer<SQLCHAR>,
+          int,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLLEN>,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLSMALLINT>,
+          ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLGetDiagField(
+    int HandleType,
+    SQLHANDLE Handle,
+    int RecNumber,
+    int DiagIdentifier,
+    SQLPOINTER DiagInfo,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> StringLength,
+  ) {
+    return _SQLGetDiagField(
+      HandleType,
+      Handle,
+      RecNumber,
+      DiagIdentifier,
+      DiagInfo,
+      BufferLength,
+      StringLength,
+    );
+  }
+
+  late final _SQLGetDiagFieldPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLSMALLINT,
+              SQLHANDLE,
+              SQLSMALLINT,
+              SQLSMALLINT,
+              SQLPOINTER,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLGetDiagField');
+  late final _SQLGetDiagField = _SQLGetDiagFieldPtr.asFunction<
+      int Function(int, SQLHANDLE, int, int, SQLPOINTER, int,
+          ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLGetDiagRec(
+    int HandleType,
+    SQLHANDLE Handle,
+    int RecNumber,
+    ffi.Pointer<SQLCHAR> Sqlstate,
+    ffi.Pointer<SQLINTEGER> NativeError,
+    ffi.Pointer<SQLCHAR> MessageText,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> TextLength,
+  ) {
+    return _SQLGetDiagRec(
+      HandleType,
+      Handle,
+      RecNumber,
+      Sqlstate,
+      NativeError,
+      MessageText,
+      BufferLength,
+      TextLength,
+    );
+  }
+
+  late final _SQLGetDiagRecPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLSMALLINT,
+              SQLHANDLE,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              ffi.Pointer<SQLINTEGER>,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLGetDiagRec');
+  late final _SQLGetDiagRec = _SQLGetDiagRecPtr.asFunction<
+      int Function(
+          int,
+          SQLHANDLE,
+          int,
+          ffi.Pointer<SQLCHAR>,
+          ffi.Pointer<SQLINTEGER>,
+          ffi.Pointer<SQLCHAR>,
+          int,
+          ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLGetEnvAttr(
+    SQLHENV EnvironmentHandle,
+    int Attribute,
+    SQLPOINTER Value,
+    int BufferLength,
+    ffi.Pointer<SQLINTEGER> StringLength,
+  ) {
+    return _SQLGetEnvAttr(
+      EnvironmentHandle,
+      Attribute,
+      Value,
+      BufferLength,
+      StringLength,
+    );
+  }
+
+  late final _SQLGetEnvAttrPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHENV, SQLINTEGER, SQLPOINTER, SQLINTEGER,
+              ffi.Pointer<SQLINTEGER>)>>('SQLGetEnvAttr');
+  late final _SQLGetEnvAttr = _SQLGetEnvAttrPtr.asFunction<
+      int Function(SQLHENV, int, SQLPOINTER, int, ffi.Pointer<SQLINTEGER>)>();
+
+  int SQLGetFunctions(
+    SQLHDBC ConnectionHandle,
+    int FunctionId,
+    ffi.Pointer<SQLUSMALLINT> Supported,
+  ) {
+    return _SQLGetFunctions(
+      ConnectionHandle,
+      FunctionId,
+      Supported,
+    );
+  }
+
+  late final _SQLGetFunctionsPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDBC, SQLUSMALLINT,
+              ffi.Pointer<SQLUSMALLINT>)>>('SQLGetFunctions');
+  late final _SQLGetFunctions = _SQLGetFunctionsPtr.asFunction<
+      int Function(SQLHDBC, int, ffi.Pointer<SQLUSMALLINT>)>();
+
+  int SQLGetInfo(
+    SQLHDBC ConnectionHandle,
+    int InfoType,
+    SQLPOINTER InfoValue,
+    int BufferLength,
+    ffi.Pointer<SQLSMALLINT> StringLength,
+  ) {
+    return _SQLGetInfo(
+      ConnectionHandle,
+      InfoType,
+      InfoValue,
+      BufferLength,
+      StringLength,
+    );
+  }
+
+  late final _SQLGetInfoPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDBC, SQLUSMALLINT, SQLPOINTER, SQLSMALLINT,
+              ffi.Pointer<SQLSMALLINT>)>>('SQLGetInfo');
+  late final _SQLGetInfo = _SQLGetInfoPtr.asFunction<
+      int Function(SQLHDBC, int, SQLPOINTER, int, ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLGetStmtAttr(
+    SQLHSTMT StatementHandle,
+    int Attribute,
+    SQLPOINTER Value,
+    int BufferLength,
+    ffi.Pointer<SQLINTEGER> StringLength,
+  ) {
+    return _SQLGetStmtAttr(
+      StatementHandle,
+      Attribute,
+      Value,
+      BufferLength,
+      StringLength,
+    );
+  }
+
+  late final _SQLGetStmtAttrPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, SQLINTEGER, SQLPOINTER, SQLINTEGER,
+              ffi.Pointer<SQLINTEGER>)>>('SQLGetStmtAttr');
+  late final _SQLGetStmtAttr = _SQLGetStmtAttrPtr.asFunction<
+      int Function(SQLHSTMT, int, SQLPOINTER, int, ffi.Pointer<SQLINTEGER>)>();
+
+  int SQLGetStmtOption(
+    SQLHSTMT StatementHandle,
+    int Option,
+    SQLPOINTER Value,
+  ) {
+    return _SQLGetStmtOption(
+      StatementHandle,
+      Option,
+      Value,
+    );
+  }
+
+  late final _SQLGetStmtOptionPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, SQLUSMALLINT, SQLPOINTER)>>('SQLGetStmtOption');
+  late final _SQLGetStmtOption = _SQLGetStmtOptionPtr.asFunction<
+      int Function(SQLHSTMT, int, SQLPOINTER)>();
+
+  int SQLGetTypeInfo(
+    SQLHSTMT StatementHandle,
+    int DataType,
+  ) {
+    return _SQLGetTypeInfo(
+      StatementHandle,
+      DataType,
+    );
+  }
+
+  late final _SQLGetTypeInfoPtr =
+      _lookup<ffi.NativeFunction<SQLRETURN Function(SQLHSTMT, SQLSMALLINT)>>(
+          'SQLGetTypeInfo');
+  late final _SQLGetTypeInfo =
+      _SQLGetTypeInfoPtr.asFunction<int Function(SQLHSTMT, int)>();
+
+  int SQLNumResultCols(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLSMALLINT> ColumnCount,
+  ) {
+    return _SQLNumResultCols(
+      StatementHandle,
+      ColumnCount,
+    );
+  }
+
+  late final _SQLNumResultColsPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, ffi.Pointer<SQLSMALLINT>)>>('SQLNumResultCols');
+  late final _SQLNumResultCols = _SQLNumResultColsPtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLSMALLINT>)>();
+
+  int SQLParamData(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLPOINTER> Value,
+  ) {
+    return _SQLParamData(
+      StatementHandle,
+      Value,
+    );
+  }
+
+  late final _SQLParamDataPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, ffi.Pointer<SQLPOINTER>)>>('SQLParamData');
+  late final _SQLParamData = _SQLParamDataPtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLPOINTER>)>();
+
+  int SQLPrepare(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> StatementText,
+    int TextLength,
+  ) {
+    return _SQLPrepare(
+      StatementHandle,
+      StatementText,
+      TextLength,
+    );
+  }
+
+  late final _SQLPreparePtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, ffi.Pointer<SQLCHAR>, SQLINTEGER)>>('SQLPrepare');
+  late final _SQLPrepare = _SQLPreparePtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, int)>();
+
+  int SQLPutData(
+    SQLHSTMT StatementHandle,
+    SQLPOINTER Data,
+    int StrLen_or_Ind,
+  ) {
+    return _SQLPutData(
+      StatementHandle,
+      Data,
+      StrLen_or_Ind,
+    );
+  }
+
+  late final _SQLPutDataPtr = _lookup<
+          ffi.NativeFunction<SQLRETURN Function(SQLHSTMT, SQLPOINTER, SQLLEN)>>(
+      'SQLPutData');
+  late final _SQLPutData =
+      _SQLPutDataPtr.asFunction<int Function(SQLHSTMT, SQLPOINTER, int)>();
+
+  int SQLRowCount(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLLEN> RowCount,
+  ) {
+    return _SQLRowCount(
+      StatementHandle,
+      RowCount,
+    );
+  }
+
+  late final _SQLRowCountPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, ffi.Pointer<SQLLEN>)>>('SQLRowCount');
+  late final _SQLRowCount =
+      _SQLRowCountPtr.asFunction<int Function(SQLHSTMT, ffi.Pointer<SQLLEN>)>();
+
+  int SQLSetConnectAttr(
+    SQLHDBC ConnectionHandle,
+    int Attribute,
+    SQLPOINTER Value,
+    int StringLength,
+  ) {
+    return _SQLSetConnectAttr(
+      ConnectionHandle,
+      Attribute,
+      Value,
+      StringLength,
+    );
+  }
+
+  late final _SQLSetConnectAttrPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDBC, SQLINTEGER, SQLPOINTER,
+              SQLINTEGER)>>('SQLSetConnectAttr');
+  late final _SQLSetConnectAttr = _SQLSetConnectAttrPtr.asFunction<
+      int Function(SQLHDBC, int, SQLPOINTER, int)>();
+
+  int SQLSetConnectOption(
+    SQLHDBC ConnectionHandle,
+    int Option,
+    int Value,
+  ) {
+    return _SQLSetConnectOption(
+      ConnectionHandle,
+      Option,
+      Value,
+    );
+  }
+
+  late final _SQLSetConnectOptionPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHDBC, SQLUSMALLINT, SQLULEN)>>('SQLSetConnectOption');
+  late final _SQLSetConnectOption =
+      _SQLSetConnectOptionPtr.asFunction<int Function(SQLHDBC, int, int)>();
+
+  int SQLSetCursorName(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> CursorName,
+    int NameLength,
+  ) {
+    return _SQLSetCursorName(
+      StatementHandle,
+      CursorName,
+      NameLength,
+    );
+  }
+
+  late final _SQLSetCursorNamePtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHSTMT, ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT)>>('SQLSetCursorName');
+  late final _SQLSetCursorName = _SQLSetCursorNamePtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, int)>();
+
+  int SQLSetDescField(
+    SQLHDESC DescriptorHandle,
+    int RecNumber,
+    int FieldIdentifier,
+    SQLPOINTER Value,
+    int BufferLength,
+  ) {
+    return _SQLSetDescField(
+      DescriptorHandle,
+      RecNumber,
+      FieldIdentifier,
+      Value,
+      BufferLength,
+    );
+  }
+
+  late final _SQLSetDescFieldPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHDESC, SQLSMALLINT, SQLSMALLINT, SQLPOINTER,
+              SQLINTEGER)>>('SQLSetDescField');
+  late final _SQLSetDescField = _SQLSetDescFieldPtr.asFunction<
+      int Function(SQLHDESC, int, int, SQLPOINTER, int)>();
+
+  int SQLSetDescRec(
+    SQLHDESC DescriptorHandle,
+    int RecNumber,
+    int Type,
+    int SubType,
+    int Length,
+    int Precision,
+    int Scale,
+    SQLPOINTER Data,
+    ffi.Pointer<SQLLEN> StringLength,
+    ffi.Pointer<SQLLEN> Indicator,
+  ) {
+    return _SQLSetDescRec(
+      DescriptorHandle,
+      RecNumber,
+      Type,
+      SubType,
+      Length,
+      Precision,
+      Scale,
+      Data,
+      StringLength,
+      Indicator,
+    );
+  }
+
+  late final _SQLSetDescRecPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHDESC,
+              SQLSMALLINT,
+              SQLSMALLINT,
+              SQLSMALLINT,
+              SQLLEN,
+              SQLSMALLINT,
+              SQLSMALLINT,
+              SQLPOINTER,
+              ffi.Pointer<SQLLEN>,
+              ffi.Pointer<SQLLEN>)>>('SQLSetDescRec');
+  late final _SQLSetDescRec = _SQLSetDescRecPtr.asFunction<
+      int Function(SQLHDESC, int, int, int, int, int, int, SQLPOINTER,
+          ffi.Pointer<SQLLEN>, ffi.Pointer<SQLLEN>)>();
+
+  int SQLSetEnvAttr(
+    SQLHENV EnvironmentHandle,
+    int Attribute,
+    SQLPOINTER Value,
+    int StringLength,
+  ) {
+    return _SQLSetEnvAttr(
+      EnvironmentHandle,
+      Attribute,
+      Value,
+      StringLength,
+    );
+  }
+
+  late final _SQLSetEnvAttrPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHENV, SQLINTEGER, SQLPOINTER, SQLINTEGER)>>('SQLSetEnvAttr');
+  late final _SQLSetEnvAttr = _SQLSetEnvAttrPtr.asFunction<
+      int Function(SQLHENV, int, SQLPOINTER, int)>();
+
+  int SQLSetParam(
+    SQLHSTMT StatementHandle,
+    int ParameterNumber,
+    int ValueType,
+    int ParameterType,
+    int LengthPrecision,
+    int ParameterScale,
+    SQLPOINTER ParameterValue,
+    ffi.Pointer<SQLLEN> StrLen_or_Ind,
+  ) {
+    return _SQLSetParam(
+      StatementHandle,
+      ParameterNumber,
+      ValueType,
+      ParameterType,
+      LengthPrecision,
+      ParameterScale,
+      ParameterValue,
+      StrLen_or_Ind,
+    );
+  }
+
+  late final _SQLSetParamPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              SQLUSMALLINT,
+              SQLSMALLINT,
+              SQLSMALLINT,
+              SQLULEN,
+              SQLSMALLINT,
+              SQLPOINTER,
+              ffi.Pointer<SQLLEN>)>>('SQLSetParam');
+  late final _SQLSetParam = _SQLSetParamPtr.asFunction<
+      int Function(SQLHSTMT, int, int, int, int, int, SQLPOINTER,
+          ffi.Pointer<SQLLEN>)>();
+
+  int SQLSetStmtAttr(
+    SQLHSTMT StatementHandle,
+    int Attribute,
+    SQLPOINTER Value,
+    int StringLength,
+  ) {
+    return _SQLSetStmtAttr(
+      StatementHandle,
+      Attribute,
+      Value,
+      StringLength,
+    );
+  }
+
+  late final _SQLSetStmtAttrPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, SQLINTEGER, SQLPOINTER, SQLINTEGER)>>('SQLSetStmtAttr');
+  late final _SQLSetStmtAttr = _SQLSetStmtAttrPtr.asFunction<
+      int Function(SQLHSTMT, int, SQLPOINTER, int)>();
+
+  int SQLSetStmtOption(
+    SQLHSTMT StatementHandle,
+    int Option,
+    int Value,
+  ) {
+    return _SQLSetStmtOption(
+      StatementHandle,
+      Option,
+      Value,
+    );
+  }
+
+  late final _SQLSetStmtOptionPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT, SQLUSMALLINT, SQLULEN)>>('SQLSetStmtOption');
+  late final _SQLSetStmtOption =
+      _SQLSetStmtOptionPtr.asFunction<int Function(SQLHSTMT, int, int)>();
+
+  int SQLSpecialColumns(
+    SQLHSTMT StatementHandle,
+    int IdentifierType,
+    ffi.Pointer<SQLCHAR> CatalogName,
+    int NameLength1,
+    ffi.Pointer<SQLCHAR> SchemaName,
+    int NameLength2,
+    ffi.Pointer<SQLCHAR> TableName,
+    int NameLength3,
+    int Scope,
+    int Nullable,
+  ) {
+    return _SQLSpecialColumns(
+      StatementHandle,
+      IdentifierType,
+      CatalogName,
+      NameLength1,
+      SchemaName,
+      NameLength2,
+      TableName,
+      NameLength3,
+      Scope,
+      Nullable,
+    );
+  }
+
+  late final _SQLSpecialColumnsPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              SQLUSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              SQLUSMALLINT,
+              SQLUSMALLINT)>>('SQLSpecialColumns');
+  late final _SQLSpecialColumns = _SQLSpecialColumnsPtr.asFunction<
+      int Function(SQLHSTMT, int, ffi.Pointer<SQLCHAR>, int,
+          ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>, int, int, int)>();
+
+  int SQLStatistics(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> CatalogName,
+    int NameLength1,
+    ffi.Pointer<SQLCHAR> SchemaName,
+    int NameLength2,
+    ffi.Pointer<SQLCHAR> TableName,
+    int NameLength3,
+    int Unique,
+    int Reserved,
+  ) {
+    return _SQLStatistics(
+      StatementHandle,
+      CatalogName,
+      NameLength1,
+      SchemaName,
+      NameLength2,
+      TableName,
+      NameLength3,
+      Unique,
+      Reserved,
+    );
+  }
+
+  late final _SQLStatisticsPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              SQLUSMALLINT,
+              SQLUSMALLINT)>>('SQLStatistics');
+  late final _SQLStatistics = _SQLStatisticsPtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>,
+          int, ffi.Pointer<SQLCHAR>, int, int, int)>();
+
+  int SQLTables(
+    SQLHSTMT StatementHandle,
+    ffi.Pointer<SQLCHAR> CatalogName,
+    int NameLength1,
+    ffi.Pointer<SQLCHAR> SchemaName,
+    int NameLength2,
+    ffi.Pointer<SQLCHAR> TableName,
+    int NameLength3,
+    ffi.Pointer<SQLCHAR> TableType,
+    int NameLength4,
+  ) {
+    return _SQLTables(
+      StatementHandle,
+      CatalogName,
+      NameLength1,
+      SchemaName,
+      NameLength2,
+      TableName,
+      NameLength3,
+      TableType,
+      NameLength4,
+    );
+  }
+
+  late final _SQLTablesPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(
+              SQLHSTMT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT,
+              ffi.Pointer<SQLCHAR>,
+              SQLSMALLINT)>>('SQLTables');
+  late final _SQLTables = _SQLTablesPtr.asFunction<
+      int Function(SQLHSTMT, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>,
+          int, ffi.Pointer<SQLCHAR>, int, ffi.Pointer<SQLCHAR>, int)>();
+
+  int SQLTransact(
+    SQLHENV EnvironmentHandle,
+    SQLHDBC ConnectionHandle,
+    int CompletionType,
+  ) {
+    return _SQLTransact(
+      EnvironmentHandle,
+      ConnectionHandle,
+      CompletionType,
+    );
+  }
+
+  late final _SQLTransactPtr = _lookup<
+      ffi.NativeFunction<
+          SQLRETURN Function(SQLHENV, SQLHDBC, SQLUSMALLINT)>>('SQLTransact');
+  late final _SQLTransact =
+      _SQLTransactPtr.asFunction<int Function(SQLHENV, SQLHDBC, int)>();
+
+  bool connect(
+    ffi.Pointer<ffi.Char> driver,
+    ffi.Pointer<ffi.Char> username,
+    ffi.Pointer<ffi.Char> password,
+  ) {
+    return _connect(
+      driver,
+      username,
+      password,
+    );
+  }
+
+  late final _connectPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Bool Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+              ffi.Pointer<ffi.Char>)>>('connect');
+  late final _connect = _connectPtr.asFunction<
+      bool Function(ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>,
+          ffi.Pointer<ffi.Char>)>();
+
+  bool disconnect() {
+    return _disconnect();
+  }
+
+  late final _disconnectPtr =
+      _lookup<ffi.NativeFunction<ffi.Bool Function()>>('disconnect');
+  late final _disconnect = _disconnectPtr.asFunction<bool Function()>();
+
+  ffi.Pointer<ffi.Char> query(
+    ffi.Pointer<ffi.Char> sql,
+  ) {
+    return _query(
+      sql,
+    );
+  }
+
+  late final _queryPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>)>>('query');
+  late final _query = _queryPtr
+      .asFunction<ffi.Pointer<ffi.Char> Function(ffi.Pointer<ffi.Char>)>();
 }
+
+class tagDATE_STRUCT extends ffi.Struct {
+  @SQLSMALLINT()
+  external int year;
+
+  @SQLUSMALLINT()
+  external int month;
+
+  @SQLUSMALLINT()
+  external int day;
+}
+
+typedef SQLSMALLINT = ffi.Short;
+typedef SQLUSMALLINT = ffi.UnsignedShort;
+
+class tagTIME_STRUCT extends ffi.Struct {
+  @SQLUSMALLINT()
+  external int hour;
+
+  @SQLUSMALLINT()
+  external int minute;
+
+  @SQLUSMALLINT()
+  external int second;
+}
+
+class tagTIMESTAMP_STRUCT extends ffi.Struct {
+  @SQLSMALLINT()
+  external int year;
+
+  @SQLUSMALLINT()
+  external int month;
+
+  @SQLUSMALLINT()
+  external int day;
+
+  @SQLUSMALLINT()
+  external int hour;
+
+  @SQLUSMALLINT()
+  external int minute;
+
+  @SQLUSMALLINT()
+  external int second;
+
+  @SQLUINTEGER()
+  external int fraction;
+}
+
+typedef SQLUINTEGER = ffi.UnsignedInt;
+
+abstract class SQLINTERVAL {
+  static const int SQL_IS_YEAR = 1;
+  static const int SQL_IS_MONTH = 2;
+  static const int SQL_IS_DAY = 3;
+  static const int SQL_IS_HOUR = 4;
+  static const int SQL_IS_MINUTE = 5;
+  static const int SQL_IS_SECOND = 6;
+  static const int SQL_IS_YEAR_TO_MONTH = 7;
+  static const int SQL_IS_DAY_TO_HOUR = 8;
+  static const int SQL_IS_DAY_TO_MINUTE = 9;
+  static const int SQL_IS_DAY_TO_SECOND = 10;
+  static const int SQL_IS_HOUR_TO_MINUTE = 11;
+  static const int SQL_IS_HOUR_TO_SECOND = 12;
+  static const int SQL_IS_MINUTE_TO_SECOND = 13;
+}
+
+class tagSQL_YEAR_MONTH extends ffi.Struct {
+  @SQLUINTEGER()
+  external int year;
+
+  @SQLUINTEGER()
+  external int month;
+}
+
+class tagSQL_DAY_SECOND extends ffi.Struct {
+  @SQLUINTEGER()
+  external int day;
+
+  @SQLUINTEGER()
+  external int hour;
+
+  @SQLUINTEGER()
+  external int minute;
+
+  @SQLUINTEGER()
+  external int second;
+
+  @SQLUINTEGER()
+  external int fraction;
+}
+
+class tagSQL_INTERVAL_STRUCT extends ffi.Struct {
+  @ffi.Int32()
+  external int interval_type;
+
+  @SQLSMALLINT()
+  external int interval_sign;
+
+  external UnnamedUnion1 intval;
+}
+
+class UnnamedUnion1 extends ffi.Union {
+  external SQL_YEAR_MONTH_STRUCT year_month;
+
+  external SQL_DAY_SECOND_STRUCT day_second;
+}
+
+typedef SQL_YEAR_MONTH_STRUCT = tagSQL_YEAR_MONTH;
+typedef SQL_DAY_SECOND_STRUCT = tagSQL_DAY_SECOND;
+
+class tagSQL_NUMERIC_STRUCT extends ffi.Struct {
+  @SQLCHAR()
+  external int precision;
+
+  @SQLSCHAR()
+  external int scale;
+
+  @SQLCHAR()
+  external int sign;
+
+  @ffi.Array.multi([16])
+  external ffi.Array<SQLCHAR> val;
+}
+
+typedef SQLCHAR = ffi.UnsignedChar;
+typedef SQLSCHAR = SCHAR;
+typedef SCHAR = ffi.SignedChar;
+
+class tagSQLGUID extends ffi.Struct {
+  @DWORD()
+  external int Data1;
+
+  @WORD()
+  external int Data2;
+
+  @WORD()
+  external int Data3;
+
+  @ffi.Array.multi([8])
+  external ffi.Array<BYTE> Data4;
+}
+
+typedef DWORD = ffi.UnsignedInt;
+typedef WORD = ffi.UnsignedShort;
+typedef BYTE = ffi.UnsignedChar;
+typedef SQLRETURN = SQLSMALLINT;
+typedef SQLHENV = SQLHANDLE;
+typedef SQLHANDLE = ffi.Pointer<ffi.Void>;
+typedef SQLHDBC = SQLHANDLE;
+typedef SQLHSTMT = SQLHANDLE;
+typedef SQLPOINTER = ffi.Pointer<ffi.Void>;
+typedef SQLLEN = ffi.Long;
+typedef SQLULEN = ffi.UnsignedLong;
+typedef SQLHDESC = SQLHANDLE;
+typedef SQLINTEGER = ffi.Int;
+
+const int true1 = 1;
+
+const int false1 = 0;
+
+const int __bool_true_false_are_defined = 1;
+
+const int ODBCVER = 896;
+
+const int HAVE_LONG_LONG = 1;
+
+const int HAVE_PWD_H = 1;
+
+const int HAVE_SYS_TYPES_H = 1;
+
+const int HAVE_UNISTD_H = 1;
+
+const int SIZEOF_LONG_INT = 8;
+
+const String ODBCINT64_TYPE = 'long';
+
+const String UODBCINT64_TYPE = 'unsigned long';
+
+const int SQL_MAX_NUMERIC_LEN = 16;
+
+const int SQL_NULL_DATA = -1;
+
+const int SQL_DATA_AT_EXEC = -2;
+
+const int SQL_SUCCESS = 0;
+
+const int SQL_SUCCESS_WITH_INFO = 1;
+
+const int SQL_NO_DATA = 100;
+
+const int SQL_ERROR = -1;
+
+const int SQL_INVALID_HANDLE = -2;
+
+const int SQL_STILL_EXECUTING = 2;
+
+const int SQL_NEED_DATA = 99;
+
+const int SQL_PARAM_DATA_AVAILABLE = 101;
+
+const int SQL_NTS = -3;
+
+const int SQL_NTSL = -3;
+
+const int SQL_MAX_MESSAGE_LENGTH = 512;
+
+const int SQL_DATE_LEN = 10;
+
+const int SQL_TIME_LEN = 8;
+
+const int SQL_TIMESTAMP_LEN = 19;
+
+const int SQL_HANDLE_ENV = 1;
+
+const int SQL_HANDLE_DBC = 2;
+
+const int SQL_HANDLE_STMT = 3;
+
+const int SQL_HANDLE_DESC = 4;
+
+const int SQL_ATTR_OUTPUT_NTS = 10001;
+
+const int SQL_ATTR_AUTO_IPD = 10001;
+
+const int SQL_ATTR_METADATA_ID = 10014;
+
+const int SQL_ATTR_APP_ROW_DESC = 10010;
+
+const int SQL_ATTR_APP_PARAM_DESC = 10011;
+
+const int SQL_ATTR_IMP_ROW_DESC = 10012;
+
+const int SQL_ATTR_IMP_PARAM_DESC = 10013;
+
+const int SQL_ATTR_CURSOR_SCROLLABLE = -1;
+
+const int SQL_ATTR_CURSOR_SENSITIVITY = -2;
+
+const int SQL_NONSCROLLABLE = 0;
+
+const int SQL_SCROLLABLE = 1;
+
+const int SQL_DESC_COUNT = 1001;
+
+const int SQL_DESC_TYPE = 1002;
+
+const int SQL_DESC_LENGTH = 1003;
+
+const int SQL_DESC_OCTET_LENGTH_PTR = 1004;
+
+const int SQL_DESC_PRECISION = 1005;
+
+const int SQL_DESC_SCALE = 1006;
+
+const int SQL_DESC_DATETIME_INTERVAL_CODE = 1007;
+
+const int SQL_DESC_NULLABLE = 1008;
+
+const int SQL_DESC_INDICATOR_PTR = 1009;
+
+const int SQL_DESC_DATA_PTR = 1010;
+
+const int SQL_DESC_NAME = 1011;
+
+const int SQL_DESC_UNNAMED = 1012;
+
+const int SQL_DESC_OCTET_LENGTH = 1013;
+
+const int SQL_DESC_ALLOC_TYPE = 1099;
+
+const int SQL_DIAG_RETURNCODE = 1;
+
+const int SQL_DIAG_NUMBER = 2;
+
+const int SQL_DIAG_ROW_COUNT = 3;
+
+const int SQL_DIAG_SQLSTATE = 4;
+
+const int SQL_DIAG_NATIVE = 5;
+
+const int SQL_DIAG_MESSAGE_TEXT = 6;
+
+const int SQL_DIAG_DYNAMIC_FUNCTION = 7;
+
+const int SQL_DIAG_CLASS_ORIGIN = 8;
+
+const int SQL_DIAG_SUBCLASS_ORIGIN = 9;
+
+const int SQL_DIAG_CONNECTION_NAME = 10;
+
+const int SQL_DIAG_SERVER_NAME = 11;
+
+const int SQL_DIAG_DYNAMIC_FUNCTION_CODE = 12;
+
+const int SQL_DIAG_ALTER_DOMAIN = 3;
+
+const int SQL_DIAG_ALTER_TABLE = 4;
+
+const int SQL_DIAG_CALL = 7;
+
+const int SQL_DIAG_CREATE_ASSERTION = 6;
+
+const int SQL_DIAG_CREATE_CHARACTER_SET = 8;
+
+const int SQL_DIAG_CREATE_COLLATION = 10;
+
+const int SQL_DIAG_CREATE_DOMAIN = 23;
+
+const int SQL_DIAG_CREATE_INDEX = -1;
+
+const int SQL_DIAG_CREATE_SCHEMA = 64;
+
+const int SQL_DIAG_CREATE_TABLE = 77;
+
+const int SQL_DIAG_CREATE_TRANSLATION = 79;
+
+const int SQL_DIAG_CREATE_VIEW = 84;
+
+const int SQL_DIAG_DELETE_WHERE = 19;
+
+const int SQL_DIAG_DROP_ASSERTION = 24;
+
+const int SQL_DIAG_DROP_CHARACTER_SET = 25;
+
+const int SQL_DIAG_DROP_COLLATION = 26;
+
+const int SQL_DIAG_DROP_DOMAIN = 27;
+
+const int SQL_DIAG_DROP_INDEX = -2;
+
+const int SQL_DIAG_DROP_SCHEMA = 31;
+
+const int SQL_DIAG_DROP_TABLE = 32;
+
+const int SQL_DIAG_DROP_TRANSLATION = 33;
+
+const int SQL_DIAG_DROP_VIEW = 36;
+
+const int SQL_DIAG_DYNAMIC_DELETE_CURSOR = 38;
+
+const int SQL_DIAG_DYNAMIC_UPDATE_CURSOR = 81;
+
+const int SQL_DIAG_GRANT = 48;
+
+const int SQL_DIAG_INSERT = 50;
+
+const int SQL_DIAG_REVOKE = 59;
+
+const int SQL_DIAG_SELECT_CURSOR = 85;
+
+const int SQL_DIAG_UNKNOWN_STATEMENT = 0;
+
+const int SQL_DIAG_UPDATE_WHERE = 82;
+
+const int SQL_UNKNOWN_TYPE = 0;
+
+const int SQL_CHAR = 1;
+
+const int SQL_NUMERIC = 2;
+
+const int SQL_DECIMAL = 3;
+
+const int SQL_INTEGER = 4;
+
+const int SQL_SMALLINT = 5;
+
+const int SQL_FLOAT = 6;
+
+const int SQL_REAL = 7;
+
+const int SQL_DOUBLE = 8;
+
+const int SQL_DATETIME = 9;
+
+const int SQL_VARCHAR = 12;
+
+const int SQL_TYPE_DATE = 91;
+
+const int SQL_TYPE_TIME = 92;
+
+const int SQL_TYPE_TIMESTAMP = 93;
+
+const int SQL_UNSPECIFIED = 0;
+
+const int SQL_INSENSITIVE = 1;
+
+const int SQL_SENSITIVE = 2;
+
+const int SQL_ALL_TYPES = 0;
+
+const int SQL_DEFAULT = 99;
+
+const int SQL_ARD_TYPE = -99;
+
+const int SQL_CODE_DATE = 1;
+
+const int SQL_CODE_TIME = 2;
+
+const int SQL_CODE_TIMESTAMP = 3;
+
+const int SQL_FALSE = 0;
+
+const int SQL_TRUE = 1;
+
+const int SQL_NO_NULLS = 0;
+
+const int SQL_NULLABLE = 1;
+
+const int SQL_NULLABLE_UNKNOWN = 2;
+
+const int SQL_PRED_NONE = 0;
+
+const int SQL_PRED_CHAR = 1;
+
+const int SQL_PRED_BASIC = 2;
+
+const int SQL_NAMED = 0;
+
+const int SQL_UNNAMED = 1;
+
+const int SQL_DESC_ALLOC_AUTO = 1;
+
+const int SQL_DESC_ALLOC_USER = 2;
+
+const int SQL_CLOSE = 0;
+
+const int SQL_DROP = 1;
+
+const int SQL_UNBIND = 2;
+
+const int SQL_RESET_PARAMS = 3;
+
+const int SQL_FETCH_NEXT = 1;
+
+const int SQL_FETCH_FIRST = 2;
+
+const int SQL_FETCH_LAST = 3;
+
+const int SQL_FETCH_PRIOR = 4;
+
+const int SQL_FETCH_ABSOLUTE = 5;
+
+const int SQL_FETCH_RELATIVE = 6;
+
+const int SQL_COMMIT = 0;
+
+const int SQL_ROLLBACK = 1;
+
+const int SQL_NULL_HENV = 0;
+
+const int SQL_NULL_HDBC = 0;
+
+const int SQL_NULL_HSTMT = 0;
+
+const int SQL_NULL_HDESC = 0;
+
+const int SQL_NULL_DESC = 0;
+
+const int SQL_NULL_HANDLE = 0;
+
+const int SQL_SCOPE_CURROW = 0;
+
+const int SQL_SCOPE_TRANSACTION = 1;
+
+const int SQL_SCOPE_SESSION = 2;
+
+const int SQL_PC_UNKNOWN = 0;
+
+const int SQL_PC_NON_PSEUDO = 1;
+
+const int SQL_PC_PSEUDO = 2;
+
+const int SQL_ROW_IDENTIFIER = 1;
+
+const int SQL_INDEX_UNIQUE = 0;
+
+const int SQL_INDEX_ALL = 1;
+
+const int SQL_INDEX_CLUSTERED = 1;
+
+const int SQL_INDEX_HASHED = 2;
+
+const int SQL_INDEX_OTHER = 3;
+
+const int SQL_API_SQLALLOCCONNECT = 1;
+
+const int SQL_API_SQLALLOCENV = 2;
+
+const int SQL_API_SQLALLOCHANDLE = 1001;
+
+const int SQL_API_SQLALLOCSTMT = 3;
+
+const int SQL_API_SQLBINDCOL = 4;
+
+const int SQL_API_SQLBINDPARAM = 1002;
+
+const int SQL_API_SQLCANCEL = 5;
+
+const int SQL_API_SQLCLOSECURSOR = 1003;
+
+const int SQL_API_SQLCOLATTRIBUTE = 6;
+
+const int SQL_API_SQLCOLUMNS = 40;
+
+const int SQL_API_SQLCONNECT = 7;
+
+const int SQL_API_SQLCOPYDESC = 1004;
+
+const int SQL_API_SQLDATASOURCES = 57;
+
+const int SQL_API_SQLDESCRIBECOL = 8;
+
+const int SQL_API_SQLDISCONNECT = 9;
+
+const int SQL_API_SQLENDTRAN = 1005;
+
+const int SQL_API_SQLERROR = 10;
+
+const int SQL_API_SQLEXECDIRECT = 11;
+
+const int SQL_API_SQLEXECUTE = 12;
+
+const int SQL_API_SQLFETCH = 13;
+
+const int SQL_API_SQLFETCHSCROLL = 1021;
+
+const int SQL_API_SQLFREECONNECT = 14;
+
+const int SQL_API_SQLFREEENV = 15;
+
+const int SQL_API_SQLFREEHANDLE = 1006;
+
+const int SQL_API_SQLFREESTMT = 16;
+
+const int SQL_API_SQLGETCONNECTATTR = 1007;
+
+const int SQL_API_SQLGETCONNECTOPTION = 42;
+
+const int SQL_API_SQLGETCURSORNAME = 17;
+
+const int SQL_API_SQLGETDATA = 43;
+
+const int SQL_API_SQLGETDESCFIELD = 1008;
+
+const int SQL_API_SQLGETDESCREC = 1009;
+
+const int SQL_API_SQLGETDIAGFIELD = 1010;
+
+const int SQL_API_SQLGETDIAGREC = 1011;
+
+const int SQL_API_SQLGETENVATTR = 1012;
+
+const int SQL_API_SQLGETFUNCTIONS = 44;
+
+const int SQL_API_SQLGETINFO = 45;
+
+const int SQL_API_SQLGETSTMTATTR = 1014;
+
+const int SQL_API_SQLGETSTMTOPTION = 46;
+
+const int SQL_API_SQLGETTYPEINFO = 47;
+
+const int SQL_API_SQLNUMRESULTCOLS = 18;
+
+const int SQL_API_SQLPARAMDATA = 48;
+
+const int SQL_API_SQLPREPARE = 19;
+
+const int SQL_API_SQLPUTDATA = 49;
+
+const int SQL_API_SQLROWCOUNT = 20;
+
+const int SQL_API_SQLSETCONNECTATTR = 1016;
+
+const int SQL_API_SQLSETCONNECTOPTION = 50;
+
+const int SQL_API_SQLSETCURSORNAME = 21;
+
+const int SQL_API_SQLSETDESCFIELD = 1017;
+
+const int SQL_API_SQLSETDESCREC = 1018;
+
+const int SQL_API_SQLSETENVATTR = 1019;
+
+const int SQL_API_SQLSETPARAM = 22;
+
+const int SQL_API_SQLSETSTMTATTR = 1020;
+
+const int SQL_API_SQLSETSTMTOPTION = 51;
+
+const int SQL_API_SQLSPECIALCOLUMNS = 52;
+
+const int SQL_API_SQLSTATISTICS = 53;
+
+const int SQL_API_SQLTABLES = 54;
+
+const int SQL_API_SQLTRANSACT = 23;
+
+const int SQL_API_SQLCANCELHANDLE = 1022;
+
+const int SQL_MAX_DRIVER_CONNECTIONS = 0;
+
+const int SQL_MAXIMUM_DRIVER_CONNECTIONS = 0;
+
+const int SQL_MAX_CONCURRENT_ACTIVITIES = 1;
+
+const int SQL_MAXIMUM_CONCURRENT_ACTIVITIES = 1;
+
+const int SQL_DATA_SOURCE_NAME = 2;
+
+const int SQL_FETCH_DIRECTION = 8;
+
+const int SQL_SERVER_NAME = 13;
+
+const int SQL_SEARCH_PATTERN_ESCAPE = 14;
+
+const int SQL_DBMS_NAME = 17;
+
+const int SQL_DBMS_VER = 18;
+
+const int SQL_ACCESSIBLE_TABLES = 19;
+
+const int SQL_ACCESSIBLE_PROCEDURES = 20;
+
+const int SQL_CURSOR_COMMIT_BEHAVIOR = 23;
+
+const int SQL_DATA_SOURCE_READ_ONLY = 25;
+
+const int SQL_DEFAULT_TXN_ISOLATION = 26;
+
+const int SQL_IDENTIFIER_CASE = 28;
+
+const int SQL_IDENTIFIER_QUOTE_CHAR = 29;
+
+const int SQL_MAX_COLUMN_NAME_LEN = 30;
+
+const int SQL_MAXIMUM_COLUMN_NAME_LENGTH = 30;
+
+const int SQL_MAX_CURSOR_NAME_LEN = 31;
+
+const int SQL_MAXIMUM_CURSOR_NAME_LENGTH = 31;
+
+const int SQL_MAX_SCHEMA_NAME_LEN = 32;
+
+const int SQL_MAXIMUM_SCHEMA_NAME_LENGTH = 32;
+
+const int SQL_MAX_CATALOG_NAME_LEN = 34;
+
+const int SQL_MAXIMUM_CATALOG_NAME_LENGTH = 34;
+
+const int SQL_MAX_TABLE_NAME_LEN = 35;
+
+const int SQL_SCROLL_CONCURRENCY = 43;
+
+const int SQL_TXN_CAPABLE = 46;
+
+const int SQL_TRANSACTION_CAPABLE = 46;
+
+const int SQL_USER_NAME = 47;
+
+const int SQL_TXN_ISOLATION_OPTION = 72;
+
+const int SQL_TRANSACTION_ISOLATION_OPTION = 72;
+
+const int SQL_INTEGRITY = 73;
+
+const int SQL_GETDATA_EXTENSIONS = 81;
+
+const int SQL_NULL_COLLATION = 85;
+
+const int SQL_ALTER_TABLE = 86;
+
+const int SQL_ORDER_BY_COLUMNS_IN_SELECT = 90;
+
+const int SQL_SPECIAL_CHARACTERS = 94;
+
+const int SQL_MAX_COLUMNS_IN_GROUP_BY = 97;
+
+const int SQL_MAXIMUM_COLUMNS_IN_GROUP_BY = 97;
+
+const int SQL_MAX_COLUMNS_IN_INDEX = 98;
+
+const int SQL_MAXIMUM_COLUMNS_IN_INDEX = 98;
+
+const int SQL_MAX_COLUMNS_IN_ORDER_BY = 99;
+
+const int SQL_MAXIMUM_COLUMNS_IN_ORDER_BY = 99;
+
+const int SQL_MAX_COLUMNS_IN_SELECT = 100;
+
+const int SQL_MAXIMUM_COLUMNS_IN_SELECT = 100;
+
+const int SQL_MAX_COLUMNS_IN_TABLE = 101;
+
+const int SQL_MAX_INDEX_SIZE = 102;
+
+const int SQL_MAXIMUM_INDEX_SIZE = 102;
+
+const int SQL_MAX_ROW_SIZE = 104;
+
+const int SQL_MAXIMUM_ROW_SIZE = 104;
+
+const int SQL_MAX_STATEMENT_LEN = 105;
+
+const int SQL_MAXIMUM_STATEMENT_LENGTH = 105;
+
+const int SQL_MAX_TABLES_IN_SELECT = 106;
+
+const int SQL_MAXIMUM_TABLES_IN_SELECT = 106;
+
+const int SQL_MAX_USER_NAME_LEN = 107;
+
+const int SQL_MAXIMUM_USER_NAME_LENGTH = 107;
+
+const int SQL_OJ_CAPABILITIES = 115;
+
+const int SQL_OUTER_JOIN_CAPABILITIES = 115;
+
+const int SQL_XOPEN_CLI_YEAR = 10000;
+
+const int SQL_CURSOR_SENSITIVITY = 10001;
+
+const int SQL_DESCRIBE_PARAMETER = 10002;
+
+const int SQL_CATALOG_NAME = 10003;
+
+const int SQL_COLLATION_SEQ = 10004;
+
+const int SQL_MAX_IDENTIFIER_LEN = 10005;
+
+const int SQL_MAXIMUM_IDENTIFIER_LENGTH = 10005;
+
+const int SQL_AT_ADD_COLUMN = 1;
+
+const int SQL_AT_DROP_COLUMN = 2;
+
+const int SQL_AT_ADD_CONSTRAINT = 8;
+
+const int SQL_AM_NONE = 0;
+
+const int SQL_AM_CONNECTION = 1;
+
+const int SQL_AM_STATEMENT = 2;
+
+const int SQL_CB_DELETE = 0;
+
+const int SQL_CB_CLOSE = 1;
+
+const int SQL_CB_PRESERVE = 2;
+
+const int SQL_FD_FETCH_NEXT = 1;
+
+const int SQL_FD_FETCH_FIRST = 2;
+
+const int SQL_FD_FETCH_LAST = 4;
+
+const int SQL_FD_FETCH_PRIOR = 8;
+
+const int SQL_FD_FETCH_ABSOLUTE = 16;
+
+const int SQL_FD_FETCH_RELATIVE = 32;
+
+const int SQL_GD_ANY_COLUMN = 1;
+
+const int SQL_GD_ANY_ORDER = 2;
+
+const int SQL_IC_UPPER = 1;
+
+const int SQL_IC_LOWER = 2;
+
+const int SQL_IC_SENSITIVE = 3;
+
+const int SQL_IC_MIXED = 4;
+
+const int SQL_OJ_LEFT = 1;
+
+const int SQL_OJ_RIGHT = 2;
+
+const int SQL_OJ_FULL = 4;
+
+const int SQL_OJ_NESTED = 8;
+
+const int SQL_OJ_NOT_ORDERED = 16;
+
+const int SQL_OJ_INNER = 32;
+
+const int SQL_OJ_ALL_COMPARISON_OPS = 64;
+
+const int SQL_SCCO_READ_ONLY = 1;
+
+const int SQL_SCCO_LOCK = 2;
+
+const int SQL_SCCO_OPT_ROWVER = 4;
+
+const int SQL_SCCO_OPT_VALUES = 8;
+
+const int SQL_TC_NONE = 0;
+
+const int SQL_TC_DML = 1;
+
+const int SQL_TC_ALL = 2;
+
+const int SQL_TC_DDL_COMMIT = 3;
+
+const int SQL_TC_DDL_IGNORE = 4;
+
+const int SQL_TXN_READ_UNCOMMITTED = 1;
+
+const int SQL_TRANSACTION_READ_UNCOMMITTED = 1;
+
+const int SQL_TXN_READ_COMMITTED = 2;
+
+const int SQL_TRANSACTION_READ_COMMITTED = 2;
+
+const int SQL_TXN_REPEATABLE_READ = 4;
+
+const int SQL_TRANSACTION_REPEATABLE_READ = 4;
+
+const int SQL_TXN_SERIALIZABLE = 8;
+
+const int SQL_TRANSACTION_SERIALIZABLE = 8;
+
+const int SQL_NC_HIGH = 0;
+
+const int SQL_NC_LOW = 1;
