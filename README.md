@@ -12,9 +12,9 @@ void main() {
   var odbc = DartOdbc();
 
   if (odbc.connect(
-    driver: Configuration.driver,
-    username: Configuration.username,
-    password: Configuration.password,
+    driver: "ClickHouse_ANSI",
+    username: "username",
+    password: "password",
   )) {
     // select
     print(odbc.query("SELECT * FROM helloworld.my_first_table"));
