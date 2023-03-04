@@ -2,7 +2,9 @@ Dart ODBC
 ---
 
 A simple connector for ODBC.
-I did not repeat the interface ODBC, I added the necessary functions in a modest way.
+I did not repeat the interface ODBC.
+
+I added the necessary functions in a modest way.
 
 ### License
 
