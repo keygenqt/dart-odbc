@@ -4,15 +4,6 @@ Dart ODBC
 A simple connector for ODBC.
 I did not repeat the interface ODBC, I added the necessary functions in a modest way.
 
-#### Feature
-
-* Connect - connection to db
-* Select - data acquisition
-* Insert - adding data
-* Update - data update
-* Delete - data deletion
-
-
 ### License
 
 ```

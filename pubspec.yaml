@@ -1,14 +1,24 @@
 name: dart_odbc
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: A simple connector for ODBC. I did not repeat the interface ODBC, I added the necessary functions in a modest way.
+version: 0.0.1
+repository: https://github.com/keygenqt/dart-odbc
 
 environment:
   sdk: '>=2.19.3 <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
+dependencies:
+  path: ^1.8.0
+  ffi: ^2.0.1
+  settings_yaml: ^5.0.0
 
 dev_dependencies:
   lints: ^2.0.0
   test: ^1.21.0
+  ffigen: ^7.2.6
+
+# dart run ffigen
+ffigen:
+  output: 'lib/src/generated_odbc.dart'
+  headers:
+    entry-points:
+      - 'c_lib/hello.h'

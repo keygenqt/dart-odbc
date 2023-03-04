@@ -6,8 +6,12 @@
 # https://dart.dev/guides/libraries/private-files#pubspeclock.
 pubspec.lock
 
-# Android studio and IntelliJ
+# Visual Studio Code and IntelliJ
 .idea
+.vscode
 
 # System temp
 .DS_Store
+
+# Configration
+configuration.yaml
