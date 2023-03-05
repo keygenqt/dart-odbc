@@ -77,58 +77,80 @@ bool disconnect()
     return true;
 }
 
-char *query(char *sql) {
+SQLHSTMT query(char *sql) {
     SQLRETURN r;
     SQLHSTMT hstmt;
-    SQLLEN n;
-
-    SQLINTEGER id;
-    SQLCHAR message[250];
 
     if (hdbc == NULL || henv == NULL)
+    {
         return 0;
+    }
 
     r = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
+
     if (!(r == SQL_SUCCESS || r == SQL_SUCCESS_WITH_INFO))
+    {
         return 0;
+    }
+        
 
     r = SQLExecDirect(hstmt, (SQLCHAR *) sql, SQL_NTS);
 
-    char * result = "";
-
-    while (1)
-    {
-        r = SQLFetch(hstmt);
-
-        if (r == SQL_SUCCESS || r == SQL_SUCCESS_WITH_INFO)
-        {
-            r = SQLGetData(hstmt, 1, SQL_C_ULONG, &id, 0, &n);
-            r = SQLGetData(hstmt, 2, SQL_C_CHAR, message, 250, &n);
-                        
-            char * str;
-            asprintf(&str, "%d, %s\n", id, message);
-
-            size_t sizeA = strlen(result);
-            size_t sizeB = strlen(str);
-            size_t size = sizeof(char) * (sizeA + sizeB + 1);
-                                                            
-            char* c = malloc(size);
-            memcpy(c, result, sizeA);
-            memcpy(c + sizeA, str, sizeB);
-            c[sizeA + sizeB] = '\0';       
-            result = c;
-        }
-        else if (SQL_NO_DATA == r)
-        {
-            break;
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
-
-    return result;
+    return hstmt;
 }
+
+// char *query(char *sql) {
+//     SQLRETURN r;
+//     SQLHSTMT hstmt;
+//     SQLLEN n;
+
+//     SQLINTEGER id;
+//     SQLCHAR message[250];
+
+//     if (hdbc == NULL || henv == NULL)
+//         return 0;
+
+//     r = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
+//     if (!(r == SQL_SUCCESS || r == SQL_SUCCESS_WITH_INFO))
+//         return 0;
+
+//     r = SQLExecDirect(hstmt, (SQLCHAR *) sql, SQL_NTS);
+
+//     char * result = "";
+
+//     while (1)
+//     {
+//         r = SQLFetch(hstmt);
+
+//         if (r == SQL_SUCCESS || r == SQL_SUCCESS_WITH_INFO)
+//         {
+//             r = SQLGetData(hstmt, 1, SQL_C_ULONG, &id, 0, &n);
+//             r = SQLGetData(hstmt, 2, SQL_C_CHAR, message, 250, &n);
+                        
+//             char * str;
+//             asprintf(&str, "%d, %s\n", id, message);
+
+//             size_t sizeA = strlen(result);
+//             size_t sizeB = strlen(str);
+//             size_t size = sizeof(char) * (sizeA + sizeB + 1);
+                                                            
+//             char* c = malloc(size);
+//             memcpy(c, result, sizeA);
+//             memcpy(c + sizeA, str, sizeB);
+//             c[sizeA + sizeB] = '\0';       
+//             result = c;
+//         }
+//         else if (SQL_NO_DATA == r)
+//         {
+//             break;
+//         }
+//         else
+//         {
+//             break;
+//         }
+//     }
+
+//     SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
+
+//     return result;
+// }

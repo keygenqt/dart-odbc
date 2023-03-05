@@ -15,4 +15,7 @@ pubspec.lock
 
 # Configration
 configuration.yaml
+
+# App
+/build
 /lib/src/generated_odbc.dart

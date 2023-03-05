@@ -8,16 +8,21 @@ I added the necessary functions in a modest way.
 
 ```dart
 void main() {
+  // get main class
+  var odbc = DartOdbc(
+    path: path.join(Directory.current.path, 'build', 'libdart_odbc.so'),
+  );
 
-  var odbc = DartOdbc();
-
+  // connect
   if (odbc.connect(
-    driver: "ClickHouse_ANSI",
-    username: "username",
-    password: "password",
+    driver: Configuration.driver,
+    username: Configuration.username,
+    password: Configuration.password,
   )) {
     // select
-    print(odbc.query("SELECT * FROM helloworld.my_first_table"));
+    List<Map<String, dynamic>> result = odbc.query("SELECT * FROM helloworld.my_first_table");
+    // print
+    print(jsonPrettyEncode(result));
     // disconnect
     odbc.disconnect();
   } else {
@@ -29,10 +34,24 @@ void main() {
 #### Output
 
 ```shell
-101, Hello, ClickHouse!
-101, Granules are the smallest chunks of data read
-102, Insert a lot of rows per batch
-102, Sort your data based on your commonly-used queries
+[
+  {
+    "userId": 101,
+    "message": "Hello, ClickHouse!"
+  },
+  {
+    "userId": 101,
+    "message": "Granules are the smallest chunks of data read"
+  },
+  {
+    "userId": 102,
+    "message": "Insert a lot of rows per batch"
+  },
+  {
+    "userId": 102,
+    "message": "Sort your data based on your commonly-used queries"
+  }
+]
 
 ```
 

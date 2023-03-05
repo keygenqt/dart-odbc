@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <sql.h>
+#include <sqlext.h>
 
 // Connect to odbc
 bool connect(char *driver, char *username, char *password);
@@ -8,4 +9,4 @@ bool connect(char *driver, char *username, char *password);
 bool disconnect();
 
 // Query
-char *query(char *sql);
+SQLHSTMT query(char *sql);
