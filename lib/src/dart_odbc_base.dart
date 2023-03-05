@@ -5,16 +5,6 @@ import "package:ffi/ffi.dart";
 import 'generated_odbc.dart';
 import 'model.dart';
 
-class MyClass<T> {
-  final T Function() creator;
-
-  MyClass(this.creator);
-
-  T getGenericInstance() {
-    return creator();
-  }
-}
-
 class DartOdbc {
   NativeLibrary? _dylib;
 
