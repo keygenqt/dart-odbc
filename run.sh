@@ -11,8 +11,9 @@ make >/dev/null
 ## build dart
 echo "2. Build app..."
 cd ../
-# dart pub get >/dev/null
+dart pub get >/dev/null
 dart run ffigen >/dev/null
+dart run build_runner build >/dev/null
 dart compile exe example/dart_odbc_example.dart -o build/example >/dev/null
 
 ## run example app
