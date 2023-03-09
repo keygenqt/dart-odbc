@@ -1,16 +1,21 @@
 import 'package:dart_odbc/dart_odbc.dart';
 import 'package:test/test.dart';
 
+import '../example/configuration.dart';
+
 void main() {
   group('A group of tests', () {
-    final awesome = DartOdbc();
-
-    setUp(() {
-      // Additional setup goes here.
-    });
-
+    final odbc = DartODBC(
+      path: '/lib/x86_64-linux-gnu/libodbc.so',
+    );
     test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
+      expect(
+          odbc.connect(
+            server: Configuration.server,
+            username: Configuration.username,
+            password: Configuration.password,
+          ),
+          isTrue);
     });
   });
 }

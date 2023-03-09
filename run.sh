@@ -1,23 +1,21 @@
 #!/bin/bash
 
-## build c lib
-echo "1. Build lib..."
+## build folder
 rm -rf build
 mkdir build
-cd build || exit
-cmake ../c_lib >/dev/null
-make >/dev/null
 
 ## build dart
-echo "2. Build app..."
-cd ../
+echo "1. Pub get..."
 dart pub get >/dev/null
+echo "2. Run ffigen..."
 dart run ffigen >/dev/null
+echo "3. Build runner..."
 dart run build_runner build >/dev/null
+echo "4. Build exe..."
 dart compile exe example/dart_odbc_example.dart -o build/example >/dev/null
 
 ## run example app
-echo "3. Start app..."
+echo "5. Start app..."
 echo "----------------------------------- start"
 ./build/example
 echo "----------------------------------- end"

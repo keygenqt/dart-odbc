@@ -1,105 +1,107 @@
 import 'dart:ffi';
 
-import "package:ffi/ffi.dart";
+import 'wrappers_odbc.dart';
 
-import 'generated_odbc.dart';
-import 'model.dart';
+export './generated_odbc.dart';
 
-class DartOdbc {
-  NativeLibrary? _dylib;
+class DartODBC {
+  DartODBC({required this.path}) : _lib = NativeLibrary(DynamicLibrary.open(path));
 
   final String path;
-  List<Model> models;
+  final NativeLibrary _lib;
 
-  bool get isAwesome => true;
-
-  DartOdbc({
-    required this.path,
-    this.models = const [],
-  }) {
-    _dylib = NativeLibrary(DynamicLibrary.open(path));
-  }
+  final handleENV = SqlHandleENV();
+  final handleDBC = SqlHandleDBC();
 
   bool connect({
-    required String driver,
+    required String server,
     required String username,
     required String password,
   }) {
-    return _dylib!.connect(
-      driver.toNativeUtf8().cast<Char>(),
-      username.toNativeUtf8().cast<Char>(),
-      password.toNativeUtf8().cast<Char>(),
-    );
+
+    // Allocate environment handle
+    int rc = sqlAllocHandle(_lib, SQL_HANDLE_ENV, null, handleENV);
+
+    if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+      //  Set the ODBC version environment attribute
+      rc = sqlSetEnvAttr(_lib, handleENV, SQL_ATTR_ODBC_VERSION, SQL_OV_ODBC3, 0);
+
+      if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+        // Allocate connection handle
+        rc = sqlAllocHandle(_lib, SQL_HANDLE_DBC, handleENV, handleDBC);
+
+        if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+          // Set login timeout to 5 seconds.
+          rc = sqlSetConnectAttr(_lib, handleDBC, SQL_LOGIN_TIMEOUT, 5, 0);
+
+          if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+            // Connect to data source
+            rc = sqlConnect(_lib, handleDBC, server, username, password);
+
+            if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+              return true;
+            } else {
+              sqlDisconnect(_lib, handleDBC);
+            }
+          }
+          // Free Handle SQL_HANDLE_DBC
+          sqlFreeHandle(_lib, SQL_HANDLE_DBC, handleDBC);
+        }
+      }
+    }
+    // Free Handle SQL_HANDLE_ENV
+    sqlFreeHandle(_lib, SQL_HANDLE_ENV, handleENV);
+
+    return false;
   }
 
   bool disconnect() {
-    return _dylib!.disconnect();
+    sqlDisconnect(_lib, handleDBC);
+    sqlFreeHandle(_lib, SQL_HANDLE_DBC, handleDBC);
+    sqlFreeHandle(_lib, SQL_HANDLE_ENV, handleENV);
+    return true;
   }
 
-  List<T> query<T extends Model>(String sql) {
-    List<T> list = [];
+  List<Map<String, dynamic>> query(
+    String sql,
+    Map<String, SqlValue> map,
+  ) {
+    final List<Map<String, dynamic>> response = [];
+    final handleSTMT = SqlHandleSTMT();
 
-    Pointer<SQLLEN> n = calloc();
+    int rc = sqlAllocHandle(_lib, SQL_HANDLE_STMT, handleDBC, handleSTMT);
 
-    final model = models.firstWhere((element) => element.runtimeType == T);
+    if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+      rc = sqlExecDirect(_lib, handleSTMT, sql);
 
-    final List<Map<String, dynamic>> columns = [];
-
-    final hstmt = _dylib!.query("DESCRIBE TABLE helloworld.my_first_table;".toNativeUtf8().cast<Char>());
-
-    Pointer<SQLCHAR> pName = calloc();
-    Pointer<SQLCHAR> pType = calloc();
-
-    while (true) {
-      var r = _dylib!.SQLFetch(hstmt);
-      if (r == SQL_SUCCESS || r == SQL_SUCCESS_WITH_INFO) {
-        r = _dylib!.SQLGetData(hstmt, 1, SQL_C_CHAR, pName as SQLPOINTER, 250, n);
-        r = _dylib!.SQLGetData(hstmt, 2, SQL_C_CHAR, pType as SQLPOINTER, 250, n);
-
-        final name = pName.cast<Utf8>().toDartString();
-        final type = pType.cast<Utf8>().toDartString();
-
-        columns.add({
-          name.replaceAllMapped(RegExp(r'_(\w)'), (m) => '${m[1]}'.toUpperCase()): type,
-        });
-
-        calloc.free(pName);
-        calloc.free(pType);
-      } else {
-        break;
+      if (rc != SQL_SUCCESS) {
+        sqlFreeHandle(_lib, SQL_HANDLE_STMT, handleSTMT);
       }
-    }
 
-    final hstmt2 = _dylib!.query(sql.toNativeUtf8().cast<Char>());
+      while (true) {
+        rc = sqlFetch(_lib, handleSTMT);
 
-    while (true) {
-      var r = _dylib!.SQLFetch(hstmt2);
-      if (r == SQL_SUCCESS || r == SQL_SUCCESS_WITH_INFO) {
-        final Map<String, dynamic> json = {};
-        columns.asMap().forEach((index, element) {
-          if (element.values.first == 'UInt32') {
-            Pointer<SQLINTEGER> value = calloc();
-            r = _dylib!.SQLGetData(hstmt2, index + 1, SQL_C_ULONG, value as SQLPOINTER, 0, n);
-            json[element.keys.first] = value.cast<Int8>().value;
-            calloc.free(value);
-          } else {
-            Pointer<SQLCHAR> value = calloc();
-            r = _dylib!.SQLGetData(hstmt2, index + 1, SQL_C_CHAR, value as SQLPOINTER, 250, n);
-            final result = value.cast<Utf8>().toDartString();
-            if (element.values.first == 'Float32') {
-              final d = double.parse(result);
-              json[element.keys.first] = d;
-            } else {
-              json[element.keys.first] = result;
+        if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+          try {
+            int index = 1;
+            final Map<String, dynamic> json = {};
+            for (var key in map.keys) {
+              json[key] = sqlGetData(_lib, handleSTMT, index, map[key]!);
+              index++;
             }
-            calloc.free(value);
+            response.add(json);
+          } catch (e) {
+            print(e.toString());
           }
-        });
-        list.add(model.fromJson(json) as T);
-      } else {
-        break;
+        } else if (rc == SQL_NO_DATA) {
+          break;
+        } else {
+          print("Fail to fetch data");
+          break;
+        }
       }
+      sqlFreeHandle(_lib, SQL_HANDLE_STMT, handleSTMT);
     }
-    return list;
+    return response;
   }
 }
