@@ -18,7 +18,6 @@ configuration.yaml
 
 # App
 /build
-/lib/src/generated_odbc.dart
 *.g.dart
 /doc/
 /example/models/hello.dart
