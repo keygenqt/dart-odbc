@@ -1,13 +1,9 @@
 import 'dart:ffi';
-import 'dart:io' show Directory;
 
 import 'package:dart_odbc/dart_odbc.dart';
 import "package:ffi/ffi.dart";
-import 'package:path/path.dart' as path;
 
 export './generated_odbc.dart';
-
-final _lib = NativeLibrary(DynamicLibrary.open(path.join(Directory.current.path, 'build', 'libdart_odbc.so')));
 
 abstract class SqlValue {
   late Pointer<dynamic> _value;
@@ -38,18 +34,19 @@ class SqlValueInt extends SqlValue {
 
 class SqlValueDouble extends SqlValue {
   @override
-  final Pointer<SQLCHAR> _value = calloc();
-  final int _type = SQL_C_CHAR;
-  final int _length = 250;
+  final Pointer<Float> _value = calloc();
+  final int _type = SQL_C_FLOAT;
+  final int _length = 0;
 
   @override
   dynamic getValue() {
-    return double.parse(_value.cast<Utf8>().toDartString());
+    return _value.cast<Float>().value.toDouble();
   }
 
   @override
   void free() {
-    calloc.free(_value);
+    // ===== CRASH ===== ?
+    // calloc.free(_value);
   }
 }
 

@@ -76,6 +76,7 @@ class DartODBC {
 
       if (rc != SQL_SUCCESS) {
         sqlFreeHandle(_lib, SQL_HANDLE_STMT, handleSTMT);
+        return response;
       }
 
       while (true) {
