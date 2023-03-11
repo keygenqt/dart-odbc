@@ -54,10 +54,10 @@ INSERT INTO helloworld.my_first_table (user_id, message, timestamp, metric) VALU
 
     // select data
     final result = odbc.fetch("SELECT * FROM helloworld.my_first_table", {
-      'userId': SqlValueInt(),
-      'message': SqlValueString(255),
-      'timestamp': SqlValueString(255),
-      'metric': SqlValueDouble(),
+      'userId': SqlValueInt('user_id'),
+      'message': SqlValueString('message', 255),
+      'timestamp': SqlValueString('timestamp', 255),
+      'metric': SqlValueDouble('metric'),
     });
 
     // map to model

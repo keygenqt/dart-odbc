@@ -7,6 +7,7 @@ export './generated_odbc.dart';
 
 abstract class SqlValue {
   late Pointer<dynamic> pointer;
+  late String name;
   late int type;
   late int length;
 
@@ -14,8 +15,11 @@ abstract class SqlValue {
 }
 
 class SqlValueInt extends SqlValue {
+  SqlValueInt(this.name);
   @override
   Pointer<SQLINTEGER> get pointer => calloc<SQLINTEGER>();
+  @override
+  final String name;
   @override
   int type = SQL_C_ULONG;
   @override
@@ -28,8 +32,11 @@ class SqlValueInt extends SqlValue {
 }
 
 class SqlValueDouble extends SqlValue {
+  SqlValueDouble(this.name);
   @override
   Pointer<Float> get pointer => calloc<Float>();
+  @override
+  final String name;
   @override
   final int type = SQL_C_FLOAT;
   @override
@@ -42,14 +49,14 @@ class SqlValueDouble extends SqlValue {
 }
 
 class SqlValueString extends SqlValue {
-  SqlValueString(this.length);
+  SqlValueString(this.name, this.length);
 
   @override
   Pointer<SQLCHAR> get pointer => calloc<SQLCHAR>(length);
-
+  @override
+  final String name;
   @override
   final int length;
-
   @override
   final int type = SQL_C_CHAR;
 
