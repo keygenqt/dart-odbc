@@ -18,7 +18,6 @@ class DartODBC {
     required String username,
     required String password,
   }) {
-
     // Allocate environment handle
     int rc = sqlAllocHandle(_lib, SQL_HANDLE_ENV, null, handleENV);
 
@@ -62,7 +61,24 @@ class DartODBC {
     return true;
   }
 
-  List<Map<String, dynamic>> query(
+  bool exec(String sql) {
+    final handleSTMT = SqlHandleSTMT();
+
+    int rc = sqlAllocHandle(_lib, SQL_HANDLE_STMT, handleDBC, handleSTMT);
+
+    if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {
+      rc = sqlExecDirect(_lib, handleSTMT, sql);
+      sqlFreeHandle(_lib, SQL_HANDLE_STMT, handleSTMT);
+    }
+
+    if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO || rc == SQL_NO_DATA) {
+      return true;
+    }
+
+    return false;
+  }
+
+  List<Map<String, dynamic>> fetch(
     String sql,
     Map<String, SqlValue> map,
   ) {
