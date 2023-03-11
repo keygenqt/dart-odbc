@@ -1,109 +1,10 @@
 import 'dart:ffi';
 
-import 'package:dart_odbc/dart_odbc.dart';
+import 'package:dart_odbc/src/sql_handles_odbc.dart';
+import 'package:dart_odbc/src/sql_types_odbc.dart';
 import "package:ffi/ffi.dart";
 
 export './generated_odbc.dart';
-
-abstract class SqlValue {
-  late Pointer<dynamic> _value;
-  late int _type;
-  late int _length;
-
-  dynamic getValue();
-
-  void free();
-}
-
-class SqlValueInt extends SqlValue {
-  @override
-  final Pointer<SQLINTEGER> _value = calloc();
-  final int _type = SQL_C_ULONG;
-  final int _length = 0;
-
-  @override
-  dynamic getValue() {
-    return _value.cast<Int>().value;
-  }
-
-  @override
-  void free() {
-    calloc.free(_value);
-  }
-}
-
-class SqlValueDouble extends SqlValue {
-  @override
-  final Pointer<Float> _value = calloc();
-  final int _type = SQL_C_FLOAT;
-  final int _length = 0;
-
-  @override
-  dynamic getValue() {
-    return _value.cast<Float>().value.toDouble();
-  }
-
-  @override
-  void free() {
-    // ===== CRASH ===== ?
-    // calloc.free(_value);
-  }
-}
-
-class SqlValueString extends SqlValue {
-  SqlValueString(this._length) : _value = calloc(_length);
-
-  final int _length;
-
-  final Pointer<SQLCHAR> _value;
-  final int _type = SQL_C_CHAR;
-
-  @override
-  dynamic getValue() {
-    return _value.cast<Utf8>().toDartString();
-  }
-
-  @override
-  void free() {
-    calloc.free(_value);
-  }
-}
-
-abstract class SqlHandle {
-  late Pointer<SQLHANDLE> _handle;
-
-  void free();
-}
-
-class SqlHandleENV extends SqlHandle {
-  @override
-  final Pointer<SQLHENV> _handle = calloc();
-
-  @override
-  void free() {
-    calloc.free(_handle);
-  }
-}
-
-class SqlHandleDBC extends SqlHandle {
-  @override
-  final Pointer<SQLHDBC> _handle = calloc();
-
-  @override
-  void free() {
-    calloc.free(_handle);
-  }
-}
-
-class SqlHandleSTMT extends SqlHandle {
-  @override
-  final Pointer<SQLHSTMT> _handle = calloc();
-
-  @override
-  void free() {
-    calloc.free(_handle);
-  }
-}
 
 int sqlAllocHandle(
   NativeLibrary lib,
@@ -113,8 +14,8 @@ int sqlAllocHandle(
 ) =>
     lib.SQLAllocHandle(
       handleType,
-      inputHandle == null ? Pointer.fromAddress(SQL_NULL_HANDLE) : inputHandle._handle.cast<SQLHANDLE>().value,
-      outputHandle == null ? Pointer.fromAddress(SQL_NULL_HANDLE) : outputHandle._handle,
+      inputHandle == null ? Pointer.fromAddress(SQL_NULL_HANDLE) : inputHandle.handle.cast<SQLHANDLE>().value,
+      outputHandle == null ? Pointer.fromAddress(SQL_NULL_HANDLE) : outputHandle.handle,
     );
 
 int sqlSetEnvAttr(
@@ -125,7 +26,7 @@ int sqlSetEnvAttr(
   int stringLength,
 ) =>
     lib.SQLSetEnvAttr(
-      environmentHandle._handle.cast<SQLHENV>().value,
+      environmentHandle.handle.cast<SQLHENV>().value,
       attribute,
       Pointer.fromAddress(value),
       stringLength,
@@ -139,7 +40,7 @@ int sqlSetConnectAttr(
   int stringLength,
 ) =>
     lib.SQLSetConnectAttr(
-      connectionHandle._handle.cast<SQLHDBC>().value,
+      connectionHandle.handle.cast<SQLHDBC>().value,
       attribute,
       Pointer.fromAddress(value),
       stringLength,
@@ -153,7 +54,7 @@ int sqlConnect(
   String authentication,
 ) =>
     lib.SQLConnect(
-      connectionHandle._handle.cast<SQLHDBC>().value,
+      connectionHandle.handle.cast<SQLHDBC>().value,
       serverName.toNativeUtf8().cast<UnsignedChar>(),
       SQL_NTS,
       userName.toNativeUtf8().cast<UnsignedChar>(),
@@ -167,7 +68,7 @@ int sqlDisconnect(
   SqlHandleDBC connectionHandle,
 ) =>
     lib.SQLDisconnect(
-      connectionHandle._handle.cast<SQLHDBC>().value,
+      connectionHandle.handle.cast<SQLHDBC>().value,
     );
 
 int sqlFreeHandle(
@@ -177,7 +78,7 @@ int sqlFreeHandle(
 ) {
   final rc = lib.SQLFreeHandle(
     handleType,
-    handle._handle.cast<SQLHDBC>().value,
+    handle.handle.cast<SQLHDBC>().value,
   );
   handle.free();
   return rc;
@@ -189,7 +90,7 @@ int sqlExecDirect(
   String statementText,
 ) =>
     lib.SQLExecDirect(
-      statementHandle._handle.cast<SQLHSTMT>().value,
+      statementHandle.handle.cast<SQLHSTMT>().value,
       statementText.toNativeUtf8().cast<SQLCHAR>(),
       SQL_NTS,
     );
@@ -199,7 +100,7 @@ int sqlFetch(
   SqlHandleSTMT statementHandle,
 ) =>
     lib.SQLFetch(
-      statementHandle._handle.cast<SQLHSTMT>().value,
+      statementHandle.handle.cast<SQLHSTMT>().value,
     );
 
 dynamic sqlGetData(
@@ -209,19 +110,20 @@ dynamic sqlGetData(
   SqlValue target,
 ) {
   Pointer<SQLLEN> n = calloc();
+  final SQLPOINTER pinter = target.pointer as SQLPOINTER;
 
   int rc = lib.SQLGetData(
-    statementHandle._handle.cast<SQLHSTMT>().value,
+    statementHandle.handle.cast<SQLHSTMT>().value,
     columnNumber,
-    target._type,
-    target._value as SQLPOINTER,
-    target._length,
+    target.type,
+    pinter,
+    target.length,
     n,
   );
 
-  final result = target.getValue();
+  final result = target.getValue(pinter);
 
-  target.free();
+  calloc.free(pinter);
   calloc.free(n);
 
   if (rc == SQL_SUCCESS || rc == SQL_SUCCESS_WITH_INFO) {

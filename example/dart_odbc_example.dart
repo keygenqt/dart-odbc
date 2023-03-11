@@ -1,7 +1,5 @@
-import 'dart:io' show Directory;
-
 import 'package:dart_odbc/dart_odbc.dart';
-import 'package:dart_odbc/src/wrappers_odbc.dart';
+import 'package:dart_odbc/src/sql_types_odbc.dart';
 import 'package:path/path.dart' as path;
 
 import 'configuration.dart';

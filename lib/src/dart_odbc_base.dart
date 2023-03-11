@@ -1,5 +1,8 @@
 import 'dart:ffi';
 
+import 'package:dart_odbc/src/sql_handles_odbc.dart';
+import 'package:dart_odbc/src/sql_types_odbc.dart';
+
 import 'wrappers_odbc.dart';
 
 export './generated_odbc.dart';
