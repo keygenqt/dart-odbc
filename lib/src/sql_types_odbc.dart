@@ -48,6 +48,23 @@ class SqlValueInt64 extends SqlValue {
   }
 }
 
+class SqlValueBool extends SqlValue {
+  SqlValueBool(this.name);
+  @override
+  Pointer<Int8> get pointer => calloc<Int8>();
+  @override
+  final String name;
+  @override
+  int type = SQL_C_UTINYINT;
+  @override
+  final int length = 0;
+
+  @override
+  dynamic getValue(Pointer<dynamic> p) {
+    return p.cast<Int8>().value > 0;
+  }
+}
+
 class SqlValueDouble extends SqlValue {
   SqlValueDouble(this.name);
   @override
